@@ -1,15 +1,36 @@
 const express = require("express");
-const cors = require("cors")
+const cors = require("cors");
+const mongoose = require("mongoose");
+const QuestionSchema = require("Question.js");
+
+//create initial connection to database
+mongoose.connect(
+  "mongodb://localhost:27017/youngreaders",
+  { useNewUrlParser: true },
+  (err) => {
+    if (!err) {
+      console.log("MongoDB Connection Succeeded!");
+    } else {
+      console.log(`Error in DB connection: ${err}`);
+    }
+  }
+);
+
+//initialize a database through a connection constructor and store in a variable
+const db = mongoose.connection;
+
+//bring in error handling for database connection
+db.on("error", console.error.bind(console, "connection error"));
 
 const app = express();
 
 const port = process.env.PORT || 8000;
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use(express.json())
-
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 process.env.USERFRONT_JWT_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsIneflhoq55pOkzwzMHg
@@ -24,47 +45,55 @@ a2NQLHVdddgd+2Jk8e2j9omHG/s65xuJdtqXYxSW1Y5VJ0djdCn3mCf7KusL41Oo
 pPtoBlWwSOEaeA5wGruj0BKO5FDRQ1tHfVgzvdEWG6ARBRhrz+IbUBkB5YSAZUgP
 nWULmFER87KKetENnhi4tTWlPZ6K4uui5qeGlFp8yzc5pnRnvXqXV2wmNbWTPBbZ
 lFAtd9rDqGIXhHoNgv2fAkMCAwEAAQ==
------END PUBLIC KEY-----`
+-----END PUBLIC KEY-----`;
 
 app.get("/admin", (req, res) => {
-    try {
-        const accessToken = req.headers.authorization.replace("Bearer ", "");
+  try {
+    const accessToken = req.headers.authorization.replace("Bearer ", "");
 
-        const verifiedPayload = jwt.verify(accessToken, process.env.USERFRONT_JWT_PUBLIC_KEY, { algorithms: ["RS256"] });
+    const verifiedPayload = jwt.verify(
+      accessToken,
+      process.env.USERFRONT_JWT_PUBLIC_KEY,
+      { algorithms: ["RS256"] }
+    );
 
-        const roles = verifiedPayload.authorization["xbpm8jmn"].roles;
-        if (!roles.includes("admin")) {
-            throw new Error ("Unauthorized")
-        }
-
-        res.send({
-            data: `Data for admin only. Requestor has roles: ${roles.join(" & ")}.`
-        });
-    } catch (error) {
-        res.status(401).send({
-            message: "Unauthorized",
-            status: 401
-        })
+    const roles = verifiedPayload.authorization["xbpm8jmn"].roles;
+    if (!roles.includes("admin")) {
+      throw new Error("Unauthorized");
     }
-})
+
+    res.send({
+      data: `Data for admin only. Requestor has roles: ${roles.join(" & ")}.`,
+    });
+  } catch (error) {
+    res.status(401).send({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+});
 
 app.get("/users", (req, res) => {
-    try {
-        const accessToken = req.headers.authorization.replace("Bearer ", "");
+  try {
+    const accessToken = req.headers.authorization.replace("Bearer ", "");
 
-        const verifiedPayload = jwt.verify(accessToken, process.env.USERFRONT_JWT_PUBLIC_KEY, { algorithms: ["RS256"] });
+    const verifiedPayload = jwt.verify(
+      accessToken,
+      process.env.USERFRONT_JWT_PUBLIC_KEY,
+      { algorithms: ["RS256"] }
+    );
 
-        res.send({
-            data: `Data specific to user ${verifiedPayload.userId} (${verifiedPayload.userUuid}).`,
-            timestamp: new Date()
-        })
-    } catch (error) {
-        res.status(401).send({
-            message: "Unauthorized",
-            status: 401,
-        })
-    }
-})
+    res.send({
+      data: `Data specific to user ${verifiedPayload.userId} (${verifiedPayload.userUuid}).`,
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    res.status(401).send({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+});
 
 // function authenticateToken(req, res, next) {
 //     const authHeader = req.headers["authorization"];
@@ -80,5 +109,36 @@ app.get("/users", (req, res) => {
 // }
 
 app.listen(port, () => {
-    console.log("Now listening on http://localhost:" + port)
-})
+  console.log("Now listening on http://localhost:" + port);
+});
+
+//Erics server section
+
+//create a model for the database entries
+const Question = mongoose.model("questions", QuestionSchema);
+
+//create functionality
+app.post("/create", async (req, res) => {
+  const newQuestion = new Question({
+    // userName: req.body.userName,
+    userAnswer: req.body.userAnswer,
+    userAnswer2: req.body.userAnswer2,
+    userAnswer3: req.body.userAnswer3,
+    date: Date(),
+    teacherAnswer: null,
+  });
+  await newQuestion.save();
+
+  res.redirect("http://localhost:3000/");
+});
+
+//update functionality for teacher page
+app.post("/update", async (req, res) => {
+  // let allQuestions = Question.find({});
+  console.log(req.body);
+  await Question.updateOne(
+    { userAnswer: req.body.userAnswer },
+    { $set: { teacherAnswer: req.body.teacherAnswer } }
+  );
+  res.redirect("http://localhost:3000/");
+});
