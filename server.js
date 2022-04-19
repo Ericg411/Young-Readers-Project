@@ -57,8 +57,8 @@ app.post("/create", async (req, res) => {
     userAnswer2: req.body.userAnswer2,
     userAnswer3: req.body.userAnswer3,
     date: Date(),
+    teacherAnswer: null
   });
-
   await newQuestion.save();
 
   res.redirect("http://localhost:3000/");
@@ -66,11 +66,11 @@ app.post("/create", async (req, res) => {
 
 //update functionality for teacher page
 app.post("/update", async (req, res) => {
-  let allQuestions = Question.find({});
-  allQuestions.updateOne(
-    { "_id": "6256ebf6b1acee7314c00de5" },
-    { $addFields: { "teacherResponse": "GOOD JOB ON THIS ONE, SAMBUBU" } }
+  // let allQuestions = Question.find({});
+  console.log(req.body)
+  await Question.updateOne(
+    { "userAnswer": req.body.userAnswer },
+    { $set: { teacherAnswer: req.body.teacherAnswer } }
     );
-    console.log("AAAA YOU DID IT YOU DID IT");
     res.redirect("http://localhost:3000/");
 });
