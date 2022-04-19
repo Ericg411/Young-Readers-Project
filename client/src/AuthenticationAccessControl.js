@@ -23,7 +23,7 @@ function Access() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">Sign Up</Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
@@ -38,20 +38,25 @@ function Access() {
         </nav>
 
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/" element={<Home />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
 
-function Home() {
+function Home({ location }) {
+  if (Userfront.accessToken()) {
+    return (
+      <Navigate to={{ pathname: "/dashboard", state: { from: location } }} />
+    );
+  }
   return (
     <div>
-      <h2>Home</h2>
+      <h2>Sign Up</h2>
       <SignupForm />
     </div>
   );
@@ -75,34 +80,42 @@ function Reset() {
   );
 }
 
-function Dashboard( {location }) {
-    if (!Userfront.accessToken()) {
-      return (
-        <Navigate to={{ pathname: "/login", state: { from: location } }} />
-      );
-    }
-    const userData = JSON.stringify(Userfront.user, null, 2);
-    return (
-      <div>
-        <h2>Dashboard</h2>
-        <pre>{userData}</pre>
-        <button onClick={Userfront.logout}>Logout</button>
-      </div>
-    );
+function Dashboard({ location }) {
+  if (!Userfront.accessToken()) {
+    return <Navigate to={{ pathname: "/login", state: { from: location } }} />;
   }
+  const userData = JSON.stringify(Userfront.user, null, 2);
+  return (
+    <div>
+      <h2>Dashboard</h2>
+      <pre>{userData}</pre>
+      <button onClick={Userfront.logout}>Logout</button>
+    </div>
+  );
+}
 
+async function getAdminInfo() {
+  const res = await window.fetch("http://localhost:8000/admin", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Userfront.tokens.accessToken}`,
+    },
+  });
+  console.log(res);
+}
+getAdminInfo();
+
+async function getUserInfo() {
+  const res = await window.fetch("http://localhost:8000/users", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Userfront.tokens.accessToken}`,
+    },
+  });
+  console.log(res);
+}
+getUserInfo();
 
 export default Access;
-
-// Calling an endpoint with a JWT
-//asnyc function getInfo() {
-//     const res = await window.fetch("/your endpoint", {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${Userfront.accessToken()}`,
-//         },
-//     });
-//     console.log(res);
-// }
-// getInfo()
