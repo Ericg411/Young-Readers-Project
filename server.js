@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const QuestionSchema = require("Question.js");
+const QuestionSchema = require("./Question");
 
 //create initial connection to database
 mongoose.connect(
@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const jwt = require("jsonwebtoken");
+const { json } = require("express/lib/response");
 
 process.env.USERFRONT_JWT_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsIneflhoq55pOkzwzMHg
@@ -117,10 +118,17 @@ app.listen(port, () => {
 //create a model for the database entries
 const Question = mongoose.model("questions", QuestionSchema);
 
+//get all questions
+app.get('/', async (req, res) => {
+  let allQuestions = await Question.find({})
+  res.json(allQuestions)
+})
+
 //create functionality
 app.post("/create", async (req, res) => {
   const newQuestion = new Question({
-    // userName: req.body.userName,
+    userName: req.body.userName,
+    bookTitle: req.body.bookTitle,
     userAnswer: req.body.userAnswer,
     userAnswer2: req.body.userAnswer2,
     userAnswer3: req.body.userAnswer3,
@@ -135,7 +143,6 @@ app.post("/create", async (req, res) => {
 //update functionality for teacher page
 app.post("/update", async (req, res) => {
   // let allQuestions = Question.find({});
-  console.log(req.body);
   await Question.updateOne(
     { userAnswer: req.body.userAnswer },
     { $set: { teacherAnswer: req.body.teacherAnswer } }

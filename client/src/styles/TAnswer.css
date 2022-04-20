@@ -1,0 +1,23 @@
+#studentAnswersMain{
+    display: flex;
+    flex-direction: column;
+    /* align-items: left; */
+    /* justify-content: left; */
+}
+#studentAnswers{
+    display: flex; 
+    flex-direction: column;
+}
+#answerButton{
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    padding: 1vh 1vw;
+    margin: .5vh 1vw;
+    border-radius: 20px;
+    
+}
+#answerButton:hover{
+    background-color: rgb(158, 208, 241);
+    box-shadow: -5px 5px 5px;
+}
