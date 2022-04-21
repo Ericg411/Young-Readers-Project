@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import BookCard from "./BookCard";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar.js";
+import BookList from "./BookList";
 import request from "superagent";
 
 const Books = (props) => {
@@ -11,7 +12,7 @@ const Books = (props) => {
     sort: "",
   });
 
-  const searchBook = () => {
+  const searchBook = (e) => {
     e.preventDefault();
     request
       .get("https://www.googleapis.com/books/v1/volumes?q=isbn&key=AIzaSyC-0s2XXV8Rqtq55oCXd9PfcMpn0kZ68RA")
@@ -32,7 +33,7 @@ const Books = (props) => {
     this.setState({ sort: e.target.value });
   };
 
-  cleanData = (data) => {
+  const cleanData = (data) => {
     const cleanedData = data.body.items.map((book) => {
       if (book.volumeInfo.hasOwnProperty("publishedDate") === false) {
         book.volumeInfo["publishedDate"] = "0000";
@@ -66,7 +67,7 @@ const Books = (props) => {
 
     return (
       <div>
-        <SearchBar searchBook={searchBook} />
+        <SearchBar searchBook={searchBook} handleSort={handleSort}/>
         <BookList books={sortedBooks} />
       </div>
     );

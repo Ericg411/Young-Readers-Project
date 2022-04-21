@@ -2,10 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const QuestionSchema = require("./Question");
+const dotenv = require("dotenv") 
+dotenv.config()
+
 
 //create initial connection to database
 mongoose.connect(
-  "mongodb://localhost:27017/youngreaders",
+  `mongodb+srv://${process.env.USER}:${process.env.PASS}@youngreadersliteracy.rzuv5.mongodb.net/youngreadersliteracy?retryWrites=true&w=majority`,
   { useNewUrlParser: true },
   (err) => {
     if (!err) {

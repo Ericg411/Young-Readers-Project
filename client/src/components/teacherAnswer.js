@@ -22,12 +22,16 @@ export default function TeacherAnswer() {
         return res.json();
       })
       .then((json) => {
+        console.log(json)
+        json.reverse()
         setStudentAnswers(json);
       });
   }
 
   useEffect(() => {
     fetcher();
+    studentAnswers.reverse()
+    console.log(studentAnswers)
   }, []);
 
   function handleSubmit(event, data) {
@@ -58,20 +62,11 @@ export default function TeacherAnswer() {
       {studentAnswers.map((question) => {
         return (
           <div id="studentAnswers" key={question._id}>
-            {/* <form
-              onSubmit={(event) => {
-                
-                handleSubmit(event, question.userAnswer);
-              }}
-            > */}
             <button id="answerButton" onClick={() => handleClick(question)}>
               <p id="userName">{question.userName}</p>
               <p id="bookTitle">{question.bookTitle}</p>
               <p id="date">{question.date}</p>
             </button>
-            {/* <textarea type="text" name="teacherAnswer" />
-              <input type="submit" /> */}
-            {/* </form> */}
           </div>
         );
       })}
