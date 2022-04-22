@@ -1,39 +1,41 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Header from "./Header";
 import BookCard from "./BookCard";
 import SearchBar from "./SearchBar.js";
 import BookList from "./BookList";
 import request from "superagent";
 
-const Books = (props) => {
-  let [state, setState] = useState({
+class Books extends Component {
+  constructor (props) {
+  super (props);  
+  this.state = {
     books: [],
     searchField: "",
     sort: "",
-  });
+  }
+}
 
-  const searchBook = (e) => {
+  searchBook = (e) => {
     e.preventDefault();
     request
       .get("https://www.googleapis.com/books/v1/volumes?q=isbn&key=AIzaSyC-0s2XXV8Rqtq55oCXd9PfcMpn0kZ68RA")
       .query({ q: SearchBar })
       .then((data) => {
-        console.log(data);
         const cleanData = this.cleanData(data);
-        setState({ books: cleanData });
+        this.setState({ books: cleanData });
       });
   };
 
-  const handleSearch = (e) => {
+  handleSearch = (e) => {
     console.log(e.target.value);
-    setState({ searchBar: e.target.value });
+    this.setState({ searchBar: e.target.value });
   };
 
-  const handleSort = (e) => {
+ handleSort = (e) => {
     this.setState({ sort: e.target.value });
   };
 
-  const cleanData = (data) => {
+cleanData = (data) => {
     const cleanedData = data.body.items.map((book) => {
       if (book.volumeInfo.hasOwnProperty("publishedDate") === false) {
         book.volumeInfo["publishedDate"] = "0000";
@@ -50,7 +52,7 @@ const Books = (props) => {
     return cleanedData;
   };
 
-  return () => {
+  render () {
     const sortedBooks = this.state.books.sort((a, b) => {
       if (this.state.sort === "Newest") {
         return parseInt(
@@ -67,8 +69,8 @@ const Books = (props) => {
 
     return (
       <div>
-        <SearchBar searchBook={searchBook} handleSort={handleSort}/>
-        <BookList books={sortedBooks} />
+        <SearchBar searchBook={this.searchBook} handleSort={this.handleSort}/>
+        <BookList books={this.state.sortedBooks} />
       </div>
     );
   };
