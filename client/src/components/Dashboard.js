@@ -1,14 +1,15 @@
 import React from "react";
-import BookCard from "./BookCard";
 
-const BookList = (props) => {
+const BookCard = (props) => {
     return (
-      <div className="list">
-        {props.books.map((book, i) => {
-          return <BookCard />;
-        })}
-      </div>
-    );
-  }
+        <div className = "card-container">
+            <img src = {props.image} alt = "" />
+            <div className="desc" />
+            <h2> Title: {props.title} </h2>
+            <h3> Author: {props.author} </h3>
+            <p>Published Data: {props.published === '0000' ? 'Not Available' : props.published} </p>
+        </div>
+    )
+}
 
-export default BookList;
+export default BookCard;
