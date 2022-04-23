@@ -1,8 +1,9 @@
 #studentAnswersMain{
     display: flex;
     flex-direction: column;
-    /* align-items: left; */
-    /* justify-content: left; */
+    height: 40vh;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple;
 }
 #studentAnswers{
     display: flex; 

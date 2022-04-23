@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import TAModal from "./TAModal";
+import SAModal from "./SAModal";
 import "../styles/TAnswer.css";
+import { useParams } from "react-router-dom";
 
-export default function TeacherAnswer() {
+export default function StudentAnswer(props) {
   const [modalState, setModalState] = useState(false);
   const [studentAnswers, setStudentAnswers] = useState([]);
   const [selectedQA, setSelectedQA] = useState("");
+
+  const student = useParams();
 
   function handleClick(questionID) {
     if (modalState === true) {
@@ -17,7 +20,7 @@ export default function TeacherAnswer() {
   }
 
   function fetcher() {
-    fetch(`http://localhost:8000/`)
+    fetch(`http://localhost:8000/students/${props.user}`)
       .then((res) => {
         return res.json();
       })
@@ -30,6 +33,7 @@ export default function TeacherAnswer() {
   useEffect(() => {
     fetcher();
     studentAnswers.reverse();
+    console.log(studentAnswers);
   }, []);
 
   function handleSubmit(event, data) {
@@ -57,7 +61,7 @@ export default function TeacherAnswer() {
 
   return (
     <div id="studentAnswersMain">
-      <h4 id="title">Teacher Response Page</h4>
+      <h4 id="title">Student Answer Page</h4>
       {studentAnswers.map((question) => {
         return (
           <div id="studentAnswers" key={question._id}>
@@ -69,7 +73,7 @@ export default function TeacherAnswer() {
           </div>
         );
       })}
-      <TAModal
+      <SAModal
         state={modalState}
         click={handleClick}
         submit={handleSubmit}

@@ -2,9 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const QuestionSchema = require("./Question");
-const dotenv = require("dotenv") 
-dotenv.config()
-
+const dotenv = require("dotenv");
+dotenv.config();
 
 //create initial connection to database
 mongoose.connect(
@@ -122,10 +121,10 @@ app.listen(port, () => {
 const Question = mongoose.model("questions", QuestionSchema);
 
 //get all questions
-app.get('/', async (req, res) => {
-  let allQuestions = await Question.find({})
-  res.json(allQuestions)
-})
+app.get("/", async (req, res) => {
+  let allQuestions = await Question.find({});
+  res.json(allQuestions);
+});
 
 //create functionality
 app.post("/create", async (req, res) => {
@@ -137,6 +136,9 @@ app.post("/create", async (req, res) => {
     userAnswer3: req.body.userAnswer3,
     date: Date(),
     teacherAnswer: null,
+    teacherAnswer1: null,
+    teacherAnswer2: null,
+    teacherAnswer3: null
   });
   await newQuestion.save();
 
@@ -145,10 +147,23 @@ app.post("/create", async (req, res) => {
 
 //update functionality for teacher page
 app.post("/update", async (req, res) => {
-  // let allQuestions = Question.find({});
   await Question.updateOne(
     { userAnswer: req.body.userAnswer },
-    { $set: { teacherAnswer: req.body.teacherAnswer } }
+    {
+      $set: {
+        "teacherAnswer": req.body.teacherAnswer,
+        "teacherAnswer1": req.body.teacherAnswer1,
+        "teacherAnswer2": req.body.teacherAnswer2,
+        "teacherAnswer3": req.body.teacherAnswer3,
+      },
+    }
   );
   res.redirect("http://localhost:3000/");
 });
+
+//seperate student answers 
+app.get('/students/:student', async (req, res) => {
+  let student = req.params
+  let studentQuestions = await Question.find({"userName": student.student})
+  res.json(studentQuestions)
+})
