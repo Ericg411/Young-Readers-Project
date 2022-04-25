@@ -18,9 +18,11 @@ function BookSearch(user) {
         setSearch({ searchResults: result.items });
         if (search.searchResults !== undefined || search.searchResults !== "") {
           const initialCreate = "http://localhost:8000/create";
+          console.log(result.items[0]?.volumeInfo.author)
           const create = {
             userName: user.user,
-            bookTitle : result.items[0]?.volumeInfo.title
+            bookTitle : result.items[0]?.volumeInfo.title,
+            bookAuthor : result.items[0]?.volumeInfo.authors[0]
           }
           const options = {
             method: "POST",
@@ -47,6 +49,7 @@ function BookSearch(user) {
           <label htmlFor="isbn">ISBN:</label>
           <input type="number" id="isbn" required />
           <input type="hidden" value={search.searchResults[0]?.volumeInfo.title ?? ""} name="bookTitle" />
+          <input type="hidden" value={search.searchResults[0]?.volumeInfo.authors[0] ?? ""} name="bookAuthor" />
           <button type="submit">Submit</button>
         </form>
       </div>

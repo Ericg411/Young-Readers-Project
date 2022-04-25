@@ -132,6 +132,7 @@ app.post("/create", async (req, res) => {
   const newQuestion = new Question({
     userName: req.body.userName,
     bookTitle: req.body.bookTitle,
+    bookAuthor: req.body.bookAuthor,
     userAnswer: null,
     userAnswer2: null,
     userAnswer3: null,

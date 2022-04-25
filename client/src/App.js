@@ -20,17 +20,11 @@ function App() {
         <h1>Young Readers Literacy Project</h1>
         <Navbar />
         <div id="mainContentContainer">
-          <div id="bookgirl">
-            <img src={Bookgirl} alt="Bookgirl" />
-          </div>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard/*" element={<Dashboard />} />
             </Routes>
-          <div id="bookboy">
-            <img src={Bookboy} alt="Bookboy" />
-          </div>
         </div>
       </header>
     </div>

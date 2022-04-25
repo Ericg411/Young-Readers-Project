@@ -68,6 +68,7 @@ export default function StudentAnswer(props) {
             <button id="answerButton" onClick={() => handleClick(question)}>
               <p id="userName">{question.userName}</p>
               <p id="bookTitle">{question.bookTitle}</p>
+              <p id="bookAuthor">{question.bookAuthor}</p>
               <p id="date">{question.date}</p>
             </button>
           </div>
