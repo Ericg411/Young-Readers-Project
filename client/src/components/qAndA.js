@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/QandA.css"
+import "../styles/qanda.css"
 
 export default function QandA(user) {
     return(
