@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 
-const Header = () => {
+class Header extends Component {
+  render () {
   return (
     <header>
       <h1> Log Your Book</h1>
     </header>
   );
-} 
+  } 
+}
 
 export default Header;
