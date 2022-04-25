@@ -169,16 +169,17 @@ app.get('/students/:student', async (req, res) => {
   res.json(studentQuestions)
 })
 
+
 //Cindy's server side - connecting to Eric's database 
 
 const BookLog = mongoose.model("BookLog", BookLogSchema);
 
-app.get("/", async (req, res) => {
+app.get("/booklog", async (req, res) => {
   let completeLog = await BookLog.find({});
   res.json(completeLog);
 });
 
-app.post("/create", async (req, res) => {
+app.post("/createbooklog", async (req, res) => {
   const newBookLog = new BookLog({
     userName: req.body.userName,
     bookTitle: req.body.bookTitle,
@@ -191,3 +192,4 @@ app.post("/create", async (req, res) => {
 });
 
  
+

@@ -1,15 +1,49 @@
 import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Userfront from "@userfront/react";
+import TeacherAnswer from "./teacherAnswer";
+import StudentAnswer from "./studentAnswer";
+import QandA from "./qAndA";
+import Books from "./Books";
+import BookSearch from "./BookSearch.js"
 
-const BookCard = (props) => {
+Userfront.init("xbpm8jmn");
+
+function Dashboard({ location }) {
+  if (!Userfront.accessToken()) {
+    return <Navigate to={{ pathname: "/login", state: { from: location } }} />;
+  }
+  const userData = JSON.stringify(Userfront.user, null, 2);
+
+  if (Userfront.user.hasRole("admin")) {
     return (
-        <div className = "card-container">
-            <img src = {props.image} alt = "" />
-            <div className="desc" />
-            <h2> Title: {props.title} </h2>
-            <h3> Author: {props.author} </h3>
-            <p>Published Data: {props.published === '0000' ? 'Not Available' : props.published} </p>
-        </div>
-    )
+      <div>
+        <h2>
+          Welcome, Young Reader: <span>{Userfront.user.name}</span>
+        </h2>
+        {/* <QandA user={Userfront.user.name}/> */}
+        <TeacherAnswer />
+        {/* <StudentAnswer user={Userfront.user.name} /> */}
+        {/* <Books /> */}
+        <button onClick={Userfront.logout}>Logout</button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h2>
+          Welcome, Young Reader: <span>{Userfront.user.name}</span>
+        </h2>
+        <BookSearch />
+        <QandA user={Userfront.user.name}/>
+        {/* <TeacherAnswer /> */}
+        <StudentAnswer user={Userfront.user.name} />
+        {/* <Books /> */}
+        <button onClick={Userfront.logout}>Logout</button>
+      </div>
+    );
+  }
 }
 
-export default BookCard;
+export default Dashboard;
+
