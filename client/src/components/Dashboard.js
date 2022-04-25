@@ -4,7 +4,6 @@ import Userfront from "@userfront/react";
 import TeacherAnswer from "./teacherAnswer";
 import StudentAnswer from "./studentAnswer";
 import QandA from "./qAndA";
-import Books from "./Books";
 import BookSearch from "./BookSearch.js"
 
 Userfront.init("xbpm8jmn");
@@ -24,7 +23,6 @@ function Dashboard({ location }) {
         {/* <QandA user={Userfront.user.name}/> */}
         <TeacherAnswer />
         {/* <StudentAnswer user={Userfront.user.name} /> */}
-        {/* <Books /> */}
         <button onClick={Userfront.logout}>Logout</button>
       </div>
     );
@@ -34,11 +32,10 @@ function Dashboard({ location }) {
         <h2>
           Welcome, Young Reader: <span>{Userfront.user.name}</span>
         </h2>
-        <BookSearch />
-        <QandA user={Userfront.user.name}/>
+        <BookSearch user={Userfront.user.name} />
+        {/* <QandA user={Userfront.user.name}/> */}
         {/* <TeacherAnswer /> */}
         <StudentAnswer user={Userfront.user.name} />
-        {/* <Books /> */}
         <button onClick={Userfront.logout}>Logout</button>
       </div>
     );

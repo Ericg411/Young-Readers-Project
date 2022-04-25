@@ -8,7 +8,7 @@ const QuestionSchema = new mongoose.Schema({
   userAnswer: String,
   userAnswer2: String,
   userAnswer3: String,
-  date: Date,
+  date: String,
   teacherAnswer: String,
   teacherAnswer1: String,
   teacherAnswer2: String,
