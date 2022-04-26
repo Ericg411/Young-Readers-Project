@@ -6,6 +6,7 @@ import StudentAnswer from "./studentAnswer";
 import QandA from "./qAndA";
 import Books from "./Books";
 import BookSearch from "./BookSearch.js"
+import "./styles/index.css";
 
 Userfront.init("xbpm8jmn");
 
