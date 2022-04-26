@@ -5,10 +5,11 @@ const mongoose = require("mongoose");
 const QuestionSchema = new mongoose.Schema({
   userName: String,
   bookTitle: String,
+  bookAuthor: String,
   userAnswer: String,
   userAnswer2: String,
   userAnswer3: String,
-  date: Date,
+  date: String,
   teacherAnswer: String,
   teacherAnswer1: String,
   teacherAnswer2: String,

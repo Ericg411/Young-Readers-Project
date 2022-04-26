@@ -8,7 +8,7 @@ dotenv.config();
 
 //create initial connection to database
 mongoose.connect(
-  `mongodb+srv://${process.env.MONGOUSER}:${process.env.PASS}@youngreadersliteracy.rzuv5.mongodb.net/youngreadersliteracy?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.USER}:${process.env.PASS}@youngreadersliteracy.rzuv5.mongodb.net/youngreadersliteracy?retryWrites=true&w=majority`,
   { useNewUrlParser: true },
   (err) => {
     if (!err) {
@@ -132,10 +132,11 @@ app.post("/create", async (req, res) => {
   const newQuestion = new Question({
     userName: req.body.userName,
     bookTitle: req.body.bookTitle,
-    userAnswer: req.body.userAnswer,
-    userAnswer2: req.body.userAnswer2,
-    userAnswer3: req.body.userAnswer3,
-    date: Date(),
+    bookAuthor: req.body.bookAuthor,
+    userAnswer: null,
+    userAnswer2: null,
+    userAnswer3: null,
+    date: new Date().toLocaleString(),
     teacherAnswer: null,
     teacherAnswer1: null,
     teacherAnswer2: null,

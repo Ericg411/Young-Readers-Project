@@ -66,9 +66,10 @@ export default function StudentAnswer(props) {
         return (
           <div id="studentAnswers" key={question._id}>
             <button id="answerButton" onClick={() => handleClick(question)}>
-              <p id="userName">{question.userName}</p>
-              <p id="bookTitle">{question.bookTitle}</p>
-              <p id="date">{question.date}</p>
+              <p id="userName">Young Reader: {question.userName}</p>
+              <p id="bookTitle">Title: {question.bookTitle}</p>
+              <p id="bookAuthor">Author: {question.bookAuthor}</p>
+              <p id="date">Date Started: {question.date}</p>
             </button>
           </div>
         );
