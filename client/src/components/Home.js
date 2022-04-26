@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom"
 import Userfront from "@userfront/react";
+import "./styles/index.css";
 
 Userfront.init("xbpm8jmn");
 
