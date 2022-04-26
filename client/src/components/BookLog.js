@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BookModal from "./BookModal";
-
+import "./styles/index.css";
 
 export default function BookLog (props) {
   const [modalState, setModalState] = useState(false);

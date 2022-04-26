@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TAModal from "./TAModal";
-import "../styles/TAnswer.css";
+import "../styles/index.css";
 
 export default function TeacherAnswer() {
   const [modalState, setModalState] = useState(false);

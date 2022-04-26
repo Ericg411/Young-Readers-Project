@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/index.css";
 
 function BookSearch(user) {
   const [search, setSearch] = useState({ searchResults: "" });
