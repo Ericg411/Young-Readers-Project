@@ -1,5 +1,6 @@
 import React from "react";
 import Userfront from "@userfront/react";
+import "./styles/index.css";
 
 Userfront.init("xbpm8jmn");
 
