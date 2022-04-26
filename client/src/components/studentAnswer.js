@@ -69,7 +69,7 @@ export default function StudentAnswer(props) {
               <p id="userName">Young Reader: {question.userName}</p>
               <p id="bookTitle">Title: {question.bookTitle}</p>
               <p id="bookAuthor">Author: {question.bookAuthor}</p>
-              <p id="date">Date Completed: {question.date}</p>
+              <p id="date">Date Started: {question.date}</p>
             </button>
           </div>
         );

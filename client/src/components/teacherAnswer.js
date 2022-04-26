@@ -98,7 +98,7 @@ export default function TeacherAnswer() {
                   <p id="userName">Young Reader: {question.userName}</p>
                   <p id="bookTitle">Title: {question.bookTitle}</p>
                   <p id="bookAuthor">Author: {question.bookAuthor}</p>
-                  <p id="date">Date Completed: {question.date}</p>
+                  <p id="date">Date Started: {question.date}</p>
                 </button>
               </div>
             );
@@ -133,7 +133,7 @@ export default function TeacherAnswer() {
                   <p id="userName">Young Reader: {item.userName}</p>
                   <p id="bookTitle">Title: {item.bookTitle}</p>
                   <p id="bookAuthor">Author: {item.bookAuthor}</p>
-                  <p id="date">Date Completed: {item.date}</p>
+                  <p id="date">Date Started: {item.date}</p>
                 </button>
               </div>
             );
