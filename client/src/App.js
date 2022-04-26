@@ -4,8 +4,6 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
 import "./styles/App.css";
-import Bookboy from "./images/Bookboy.svg";
-import Bookgirl from "./images/Bookgirl.svg";
 import Bookrow from "./images/Bookrow.svg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

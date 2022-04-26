@@ -32,6 +32,28 @@ export default function TeacherAnswer() {
     studentAnswers.reverse();
   }, []);
 
+  const [searchData, setSearchData] = useState(studentAnswers);
+
+  const searchItem = (query) => {
+    if (!query) {
+      setSearchData(studentAnswers);
+      return;
+    }
+    query = query.toLowerCase();
+
+    const finalResult = [];
+    console.log(searchData);
+    studentAnswers.forEach((item) => {
+      if (item.userName.toLowerCase().indexOf(query) !== -1 
+      // || item.bookAuthor.toLowerCase().indexOf(query) !== -1
+      ) 
+      {
+        finalResult.push(item);
+      }
+    });
+    setSearchData(finalResult);
+  };
+
   function handleSubmit(event, data) {
     const url = "http://localhost:8000/update";
     //post body data
@@ -55,27 +77,76 @@ export default function TeacherAnswer() {
       .then((res) => console.log(res));
   }
 
-  return (
-    <div id="studentAnswersMain">
-      <h4 id="title">Teacher Response Page</h4>
-      {studentAnswers.map((question) => {
-        return (
-          <div id="studentAnswers" key={question._id}>
-            <button id="answerButton" onClick={() => handleClick(question)}>
-              <p id="userName">{question.userName}</p>
-              <p id="bookTitle">{question.bookTitle}</p>
-              <p id="date">{question.date}</p>
-            </button>
-          </div>
-        );
-      })}
-      <TAModal
-        state={modalState}
-        click={handleClick}
-        submit={handleSubmit}
-        answers={studentAnswers}
-        selectedQA={selectedQA}
-      />
-    </div>
-  );
+  console.log(searchData);
+  if (searchData.length === 0) {
+    return (
+      <div>
+        <div>
+          <input
+            type="search"
+            placeholder="Search by Book Title or User Name!"
+            id="search"
+            onChange={(e) => searchItem(e.target.value)}
+          ></input>
+        </div>
+        <div id="studentAnswersMain">
+          <h4 id="title">Teacher Response Page</h4>
+          {studentAnswers.map((question) => {
+            return (
+              <div id="studentAnswers" key={question._id}>
+                <button id="answerButton" onClick={() => handleClick(question)}>
+                  <p id="userName">{question.userName}</p>
+                  <p id="bookTitle">{question.bookTitle}</p>
+                  <p id="bookAuthor">{question.bookAuthor}</p>
+                  <p id="date">{question.date}</p>
+                </button>
+              </div>
+            );
+          })}
+          <TAModal
+            state={modalState}
+            click={handleClick}
+            submit={handleSubmit}
+            answers={studentAnswers}
+            selectedQA={selectedQA}
+          />
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div>
+          <input
+            type="search"
+            placeholder="Search by Book Title or User Name!"
+            id="search"
+            onChange={(e) => searchItem(e.target.value)}
+          ></input>
+        </div>
+        <div>Teacher Response</div>
+        <div id="studentAnswersMain">
+          {searchData.map((item) => {
+            return (
+              <div id="studentAnswers" key={item._id}>
+                <button id="answerButton" onClick={() => handleClick(item)}>
+                  <p id="userName">{item.userName}</p>
+                  <p id="bookTitle">{item.bookTitle}</p>
+                  <p id="bookAuthor">{item.bookAuthor}</p>
+                  <p id="date">{item.date}</p>
+                </button>
+              </div>
+            );
+          })}
+          <TAModal
+            state={modalState}
+            click={handleClick}
+            submit={handleSubmit}
+            answers={studentAnswers}
+            selectedQA={selectedQA}
+          />
+        </div>
+      </div>
+    );
+  }
 }
