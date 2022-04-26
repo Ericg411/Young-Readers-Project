@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Userfront from "@userfront/react";
+import "./styles/index.css";
 
 function Navbar() {
   if (!Userfront.accessToken()) {
