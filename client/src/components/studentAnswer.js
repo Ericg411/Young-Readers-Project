@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SAModal from "./SAModal";
-import "../styles/TAnswer.css";
+import "./styles/index.css";
 import { useParams } from "react-router-dom";
 
 export default function StudentAnswer(props) {
