@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/App.css";
+import "./styles/index.css";
 
 export default function BookModal(props) {
   if (props.state === true) {
