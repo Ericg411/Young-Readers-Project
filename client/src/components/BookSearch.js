@@ -3,7 +3,7 @@ import "../styles/index.css";
 
 function BookSearch(user) {
   const [search, setSearch] = useState({ searchResults: "" });
-  const [showText, setShowText] = useState(false)
+  const [showText, setShowText] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,8 +19,36 @@ function BookSearch(user) {
       .then((response) => response.json())
       .then((result) => {
         setSearch({ searchResults: result.items });
-        setShowText(!showText)
-        if (search.searchResults !== undefined || search.searchResults !== "") {
+        setShowText(!showText);
+        if (
+          (search.searchResults !== undefined &&
+            result.items[0].volumeInfo.authors === undefined) ||
+          (search.searchResults !== "" &&
+            result.items[0].volumeInfo.authors === undefined)
+        ) {
+          const initialCreate = "http://localhost:8000/create";
+          const create = {
+            userName: user.user,
+            bookTitle: result.items[0]?.volumeInfo.title,
+            bookAuthor: "No Author",
+          };
+          const options = {
+            method: "POST",
+            body: JSON.stringify(create),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+          fetch(initialCreate, options)
+            .then((res) => res.json())
+            .then((res) => console.log(res));
+          window.location.reload();
+        } else if (
+          (search.searchResults !== undefined &&
+            result.items[0].volumeInfo.authors !== undefined) ||
+          (search.searchResults !== "" &&
+            result.items[0].volumeInfo.authors !== undefined)
+        ) {
           const initialCreate = "http://localhost:8000/create";
           const create = {
             userName: user.user,
@@ -42,7 +70,6 @@ function BookSearch(user) {
       });
     isbn.value = "";
   };
-  console.log(search.searchResults)
   if (search.searchResults !== undefined) {
     return (
       <div>
@@ -75,7 +102,9 @@ function BookSearch(user) {
           <label htmlFor="isbn">ISBN:</label>
           <input type="number" id="isbn" required />
           <button type="submit">Submit</button>
-          {showText && <h2>Sorry, that is an invalid ISBN. Please try again!</h2>}
+          {showText && (
+            <h2>Sorry, that is an invalid ISBN. Please try again!</h2>
+          )}
         </form>
       </div>
     );

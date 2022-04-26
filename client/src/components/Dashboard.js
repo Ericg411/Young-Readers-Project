@@ -31,7 +31,7 @@ function Dashboard({ location }) {
           Welcome, Young Reader: <span>{Userfront.user.name}</span>
         </h2>
         <BookSearch user={Userfront.user.name} />
-        <QandA user={Userfront.user.name}/>
+        {/* <QandA user={Userfront.user.name}/> */}
         <StudentAnswer user={Userfront.user.name} />
         <button onClick={Userfront.logout}>Logout</button>
       </div>

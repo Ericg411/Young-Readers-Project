@@ -133,6 +133,9 @@ app.post("/create", async (req, res) => {
     userName: req.body.userName,
     bookTitle: req.body.bookTitle,
     bookAuthor: req.body.bookAuthor,
+    question1: null,
+    question2: null,
+    question3: null,
     userAnswer: null,
     userAnswer2: null,
     userAnswer3: null,
@@ -148,7 +151,7 @@ app.post("/create", async (req, res) => {
 });
 
 //update functionality for teacher page
-app.post("/update", async (req, res) => {
+app.post("/teacherupdate", async (req, res) => {
   await Question.updateOne(
     { userAnswer: req.body.userAnswer },
     {
@@ -162,6 +165,25 @@ app.post("/update", async (req, res) => {
   );
   res.redirect("http://localhost:3000/");
 });
+
+//update functionality for the student page
+app.post('/studentupdate', async (req, res) => {
+  console.log("Not today, mate")
+  await Question.updateOne(
+    { bookTitle: req.body.bookTitle },
+    {
+      $set: {
+        // "question1": req.body.question1,
+        // "question2": req.body.question2,
+        // "question3": req.body.question3,
+        "userAnswer": req.body.userAnswer,
+        "userAnswer2": req.body.userAnswer2,
+        "userAnswer3": req.body.userAnswer3
+      },
+    }
+  );
+  res.redirect("http://localhost:3000/");
+})
 
 //seperate student answers 
 app.get('/students/:student', async (req, res) => {

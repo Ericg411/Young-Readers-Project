@@ -75,6 +75,7 @@ export default function StudentAnswer(props) {
         );
       })}
       <SAModal
+        user={props.user}
         state={modalState}
         click={handleClick}
         submit={handleSubmit}
