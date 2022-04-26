@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles/index.css";
+import "../styles/index.css";
 
 function BookSearch(user) {
   const [search, setSearch] = useState({ searchResults: "" });
@@ -42,6 +42,7 @@ function BookSearch(user) {
       });
     isbn.value = "";
   };
+  console.log(search.searchResults)
   if (search.searchResults !== undefined) {
     return (
       <div>

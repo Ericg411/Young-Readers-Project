@@ -45,7 +45,7 @@ export default function TeacherAnswer() {
     console.log(searchData);
     studentAnswers.forEach((item) => {
       if (item.userName.toLowerCase().indexOf(query) !== -1 
-      || item.bookAuthor.toLowerCase().indexOf(query) !== -1
+      || item.bookTitle.toLowerCase().indexOf(query) !== -1
       ) 
       {
         finalResult.push(item);

@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/index.css";
+import "../styles/index.css";
 
 export default function TAModal(props) {
   if (props.state === true) {

@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const QuestionSchema = require("./Question");
-const BookLogSchema = require ("./BookLogSchema")
+// const BookLogSchema = require ("./BookLogSchema")
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -173,24 +173,24 @@ app.get('/students/:student', async (req, res) => {
 
 //Cindy's server side - connecting to Eric's database 
 
-const BookLog = mongoose.model("BookLog", BookLogSchema);
+// const BookLog = mongoose.model("BookLog", BookLogSchema);
 
-app.get("/booklog", async (req, res) => {
-  let completeLog = await BookLog.find({});
-  res.json(completeLog);
-});
+// app.get("/booklog", async (req, res) => {
+//   let completeLog = await BookLog.find({});
+//   res.json(completeLog);
+// });
 
-app.post("/createbooklog", async (req, res) => {
-  const newBookLog = new BookLog({
-    userName: req.body.userName,
-    bookTitle: req.body.bookTitle,
-    bookAuthor: req.body.bookAuthor,
-    bookReview: req.body.bookReview,
-  });
-  await newBookLog.save();
+// app.post("/createbooklog", async (req, res) => {
+//   const newBookLog = new BookLog({
+//     userName: req.body.userName,
+//     bookTitle: req.body.bookTitle,
+//     bookAuthor: req.body.bookAuthor,
+//     bookReview: req.body.bookReview,
+//   });
+//   await newBookLog.save();
 
-  res.redirect("http://localhost:3000/");
-});
+//   res.redirect("http://localhost:3000/");
+// });
 
  
 

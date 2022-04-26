@@ -5,7 +5,7 @@ import TeacherAnswer from "./teacherAnswer";
 import StudentAnswer from "./studentAnswer";
 import QandA from "./qAndA";
 import BookSearch from "./BookSearch.js"
-import "./styles/index.css";
+import "../styles/index.css";
 
 Userfront.init("xbpm8jmn");
 
