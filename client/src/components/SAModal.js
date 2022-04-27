@@ -22,10 +22,14 @@ export default function SAModal(props) {
           <h3>Placeholder Question Three?: </h3>
           <p id="userAnswer3">{answers.userAnswer3}</p> */}
           <h3>Teacher's Response:</h3>
-          <p>{answers.question1 || "Not Done Yet!"}: {answers.teacherAnswer1 || "Not yet answered"}</p>
-          <p>{answers.question2 || "Not Done Yet!"}: {answers.teacherAnswer2 || "Not yet answered"}</p>
-          <p>{answers.question3 || "Not Done Yet!"}: {answers.teacherAnswer3 || "Not yet answered"}</p>
-          <p>Overall: {answers.teacherAnswer}</p>
+          <p>{answers.question1 || "Not Done Yet!:"}</p>
+          <p>{answers.teacherAnswer1 || "Not yet answered"}</p>
+          <p>{answers.question2 || "Not Done Yet!:"}</p>
+          <p>{answers.teacherAnswer2 || "Not yet answered"}</p>
+          <p>{answers.question3 || "Not Done Yet!:"}</p>
+          <p>{answers.teacherAnswer3 || "Not yet answered"}</p>
+          <p>Additional Comments:</p>
+          <p>{answers.teacherAnswer}</p>
           <button id="closeWindow" onClick={props.click}>
             Close Window
           </button>
