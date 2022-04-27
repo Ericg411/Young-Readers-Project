@@ -1,5 +1,5 @@
-import React from "react";
-import '../styles/index.css'
+import React, { useState, useRef, useEffect } from "react";
+import "../styles/index.css";
 
 export default function QandA(props) {
   let quesArr = [
@@ -11,61 +11,88 @@ export default function QandA(props) {
     "What was your favorite part?",
   ];
   function questionPicker() {
-      let pickedQuestion = Math.floor(Math.random() * quesArr.length)
-      return quesArr[pickedQuestion]
+    let pickedQuestion = Math.floor(Math.random() * quesArr.length);
+    return quesArr.splice(pickedQuestion, 1);
+  }
+  function questionPicker2() {
+    let pickedQuestion = Math.floor(Math.random() * quesArr.length);
+    return quesArr.splice(pickedQuestion, 1);
+  }
+  function questionPicker3() {
+    let pickedQuestion = Math.floor(Math.random() * quesArr.length);
+    return quesArr.splice(pickedQuestion, 1);
   }
 
-  function handleSubmit(event, data) {
-    const url = "http://localhost:8000/studentupdate";
-    //post body data
-    const user = {
-      userAnswer: event.target[0].value,
-      userAnswer2: event.target[1].value,
-      userAnswer3: event.target[2].value,
-    };
-    //request options
-    const options = {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((res) => console.log(res));
-  }
+  let [showText, setShowText] = useState(true);
+  
+  
+      const elRef = useRef()
 
+      useEffect(() => {
+          console.log(elRef.current.textContent)
+          if (elRef.current.textContent !== "") {
+              setShowText(!showText)
+          }
+      }, []);
+  
   return (
     <div id="qAndA">
       <h3>Student QandA</h3>
-      <form id="input" action="http://localhost:8000/studentupdate" method="POST">
+      <form
+        id="input"
+        action="http://localhost:8000/studentupdate"
+        method="POST"
+      >
         <input type="hidden" value={props.answers.date} name="date" />
-        <input type="text" name="question1" value={props.answers.question1 || questionPicker()} readOnly/>
+        <input
+          type="text"
+          name="question1"
+          value={props.answers.question1 || questionPicker()}
+          readOnly
+        />
         <h4>{props.answers.userAnswer}</h4>
-        <textarea
-          placeholder="Type your answer here! Click and drag to resize the box."
+        {showText && (
+          <textarea
+            placeholder="Type your answer here! Click and drag to resize the box."
+            type="text"
+            id="a1"
+            name="userAnswer"
+            required
+          />
+        )}
+        <input
           type="text"
-          id="a1"
-          name="userAnswer"
+          name="question2"
+          value={props.answers.question2 || questionPicker2()}
+          readOnly
         />
-        <input type='text' name="question2" value={props.answers.question2 || questionPicker()} readOnly/>
         <h4>{props.answers.userAnswer2}</h4>
-        <textarea
-          placeholder="Type your answer here! Click and drag to resize the box."
+        {showText && (
+          <textarea
+            placeholder="Type your answer here! Click and drag to resize the box."
+            type="text"
+            id="a2"
+            name="userAnswer2"
+            required
+          />
+        )}
+        <input
           type="text"
-          id="a2"
-          name="userAnswer2"
+          name="question3"
+          value={props.answers.question3 || questionPicker3()}
+          readOnly
         />
-        <input type="text" name="question3" value={props.answers.question3 || questionPicker()} readOnly/>
-        <h4>{props.answers.userAnswer3}</h4>
-        <textarea
-          placeholder="Type your answer here! Click and drag to resize the box."
-          type="text"
-          id="a3"
-          name="userAnswer3"
-        />
-        <input type="submit" />
+        <h4 ref={elRef}>{props.answers.userAnswer3}</h4>
+        {showText && (
+          <textarea
+            placeholder="Type your answer here! Click and drag to resize the box."
+            type="text"
+            id="a3"
+            name="userAnswer3"
+            required
+          />
+        )}
+        {showText && <input type="submit"/>}
       </form>
     </div>
   );
