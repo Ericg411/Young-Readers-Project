@@ -55,7 +55,7 @@ export default function TeacherAnswer() {
   };
 
   function handleSubmit(event, data) {
-    const url = "http://localhost:8000/update";
+    const url = "http://localhost:8000/teacherupdate";
     //post body data
     const user = {
       userAnswer: data,

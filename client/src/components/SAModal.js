@@ -9,7 +9,7 @@ export default function SAModal(props) {
       <div id="tamodal">
           <h3 id="userName">Submitted by: {answers.userName}</h3>
           <p id="date">On: {answers.date}</p>
-          <QandA title={answers.bookTitle}/>
+          <QandA answers={answers}/>
         <form
           id="tamodal-form"
         >
@@ -22,9 +22,9 @@ export default function SAModal(props) {
           <h3>Placeholder Question Three?: </h3>
           <p id="userAnswer3">{answers.userAnswer3}</p> */}
           <h3>Teacher's Response:</h3>
-          <p>Question One: {answers.teacherAnswer1}</p>
-          <p>Question Two: {answers.teacherAnswer2}</p>
-          <p>Question Three:{answers.teacherAnswer3}</p>
+          <p>{answers.question1 || "Not Done Yet!"}: {answers.teacherAnswer1 || "Not yet answered"}</p>
+          <p>{answers.question2 || "Not Done Yet!"}: {answers.teacherAnswer2 || "Not yet answered"}</p>
+          <p>{answers.question3 || "Not Done Yet!"}: {answers.teacherAnswer3 || "Not yet answered"}</p>
           <p>Overall: {answers.teacherAnswer}</p>
           <button id="closeWindow" onClick={props.click}>
             Close Window

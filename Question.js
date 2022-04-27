@@ -16,7 +16,8 @@ const QuestionSchema = new mongoose.Schema({
   teacherAnswer: String,
   teacherAnswer1: String,
   teacherAnswer2: String,
-  teacherAnswer3: String
+  teacherAnswer3: String,
+  dateCompleted: String,
 });
 
 module.exports = QuestionSchema;

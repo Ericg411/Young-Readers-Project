@@ -2,7 +2,7 @@ import React from "react";
 import '../styles/index.css'
 
 export default function QandA(props) {
-  const quesArr = [
+  let quesArr = [
     "What's the Big Idea?",
     "What happened in the story?",
     "What was wrong with the main character?",
@@ -40,25 +40,25 @@ export default function QandA(props) {
     <div id="qAndA">
       <h3>Student QandA</h3>
       <form id="input" action="http://localhost:8000/studentupdate" method="POST">
-        <input type="hidden" value={props.title} name="bookTitle" />
-        <h3 name="question1">{questionPicker()}</h3>
-        <h4></h4>
+        <input type="hidden" value={props.answers.date} name="date" />
+        <input type="text" name="question1" value={props.answers.question1 || questionPicker()} readOnly/>
+        <h4>{props.answers.userAnswer}</h4>
         <textarea
           placeholder="Type your answer here! Click and drag to resize the box."
           type="text"
           id="a1"
           name="userAnswer"
         />
-        <h3 name="question2">{questionPicker()}</h3>
-        <h4></h4>
+        <input type='text' name="question2" value={props.answers.question2 || questionPicker()} readOnly/>
+        <h4>{props.answers.userAnswer2}</h4>
         <textarea
           placeholder="Type your answer here! Click and drag to resize the box."
           type="text"
           id="a2"
           name="userAnswer2"
         />
-        <h3 name="question3">{questionPicker()}</h3>
-        <h4></h4>
+        <input type="text" name="question3" value={props.answers.question3 || questionPicker()} readOnly/>
+        <h4>{props.answers.userAnswer3}</h4>
         <textarea
           placeholder="Type your answer here! Click and drag to resize the box."
           type="text"

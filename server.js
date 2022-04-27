@@ -143,7 +143,8 @@ app.post("/create", async (req, res) => {
     teacherAnswer: null,
     teacherAnswer1: null,
     teacherAnswer2: null,
-    teacherAnswer3: null
+    teacherAnswer3: null,
+    dateCompleted: null
   });
   await newQuestion.save();
 
@@ -168,17 +169,18 @@ app.post("/teacherupdate", async (req, res) => {
 
 //update functionality for the student page
 app.post('/studentupdate', async (req, res) => {
-  console.log("Not today, mate")
+  console.log(req.body)
   await Question.updateOne(
-    { bookTitle: req.body.bookTitle },
+    { date: req.body.date },
     {
       $set: {
-        // "question1": req.body.question1,
-        // "question2": req.body.question2,
-        // "question3": req.body.question3,
+        "question1": req.body.question1,
+        "question2": req.body.question2,
+        "question3": req.body.question3,
         "userAnswer": req.body.userAnswer,
         "userAnswer2": req.body.userAnswer2,
-        "userAnswer3": req.body.userAnswer3
+        "userAnswer3": req.body.userAnswer3,
+        "dateCompleted": new Date().toLocaleString()
       },
     }
   );
